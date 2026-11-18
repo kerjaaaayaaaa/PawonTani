@@ -1,7 +1,7 @@
 <?php
 
-require_once 'c:/laragon/www/PawonTani/vendor/autoload.php';
-$app = require_once 'c:/laragon/www/PawonTani/bootstrap/app.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+$app = require_once __DIR__ . '/../../bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 
