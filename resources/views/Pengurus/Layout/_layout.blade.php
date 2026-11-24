@@ -15,21 +15,26 @@
 
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts: Inter, Poppins, Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest" defer></script>
 
-
   <style>
+    :root {
+      --pawon-primary: #398D32;
+      --pawon-secondary: #EAF5E5;
+      --pawon-bg: #F8FAFC;
+    }
+
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #F5F8F1;
+      font-family: 'Inter', 'Poppins', 'Plus Jakarta Sans', sans-serif;
+      background-color: #F8FAFC;
     }
 
     /* Custom scrollbar for clean administrative tables */
@@ -38,14 +43,14 @@
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #F5F8F1;
+      background: #F8FAFC;
     }
     ::-webkit-scrollbar-thumb {
       background: #C5DFB0;
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #9AB880;
+      background: #398D32;
     }
   </style>
 

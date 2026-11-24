@@ -16,6 +16,8 @@ use App\Http\Controllers\Pengurus\DashboardController as PengurusDashboardContro
 use App\Http\Controllers\Pengurus\LahanController;
 use App\Http\Controllers\Pengurus\MonitoringController;
 use App\Http\Controllers\Pengurus\PanenController as PengurusPanenController;
+use App\Http\Controllers\Pengurus\TransaksiController;
+use App\Http\Controllers\Pengurus\LaporanTransaksiController;
 use App\Services\CommodityService;
 use App\Services\HarvestPredictionService;
 use App\Http\Controllers\Admin\KelompokTaniController;
@@ -122,17 +124,20 @@ Route::prefix('pengurus')->name('pengurus.')->middleware(['auth', 'role:Pengurus
     Route::get('/panen/{id}', [PengurusPanenController::class, 'show'])->name('panen.show');
     Route::post('/panen/{id}/verifikasi', [PengurusPanenController::class, 'verifikasi'])->name('panen.verifikasi');
 
-    Route::get('/penjualan', fn () => $errorPage(
-        'Penjualan',
-        'Kelola transaksi dan riwayat penjualan hasil pertanian.',
-        'Pengurus.Layout._layout'
-    ))->name('penjualan');
+    // Kelola Transaksi Penjualan Kelompok Tani
+    Route::get('/penjualan', [TransaksiController::class, 'index'])->name('penjualan');
+    Route::post('/penjualan', [TransaksiController::class, 'store'])->name('penjualan.store');
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi');
+    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 
-    Route::get('/laporan', fn () => $errorPage(
-        'Laporan',
-        'Lihat dan unduh laporan aktivitas kelompok tani.',
-        'Pengurus.Layout._layout'
-    ))->name('laporan');
+    // Laporan & Analitik Keuangan Penjualan Kelompok Tani
+    Route::get('/laporan', [LaporanTransaksiController::class, 'index'])->name('laporan');
+    Route::post('/laporan', [LaporanTransaksiController::class, 'store'])->name('laporan.store');
+    Route::get('/laporan/transaksi', [LaporanTransaksiController::class, 'index'])->name('laporan.transaksi');
+    Route::post('/laporan/transaksi', [LaporanTransaksiController::class, 'store'])->name('laporan.transaksi.store');
+    Route::get('/laporan/transaksi/export', [LaporanTransaksiController::class, 'export'])->name('laporan.transaksi.export');
+    Route::get('/laporan/transaksi/print', [LaporanTransaksiController::class, 'print'])->name('laporan.transaksi.print');
+    Route::get('/laporan/transaksi/{id}', [LaporanTransaksiController::class, 'show'])->name('laporan.transaksi.show');
 
     Route::get('/informasi', function () {
         /** @var \App\Models\Pengguna|null $pengurus */
@@ -281,6 +286,12 @@ Route::prefix('pengurus')->name('pengurus.')->middleware(['auth', 'role:Pengurus
 
     Route::get('/profil', [ProfileController::class, 'show'])->name('profil');
     Route::put('/profil', [ProfileController::class, 'update'])->name('profil.update');
+
+    // Pengaturan Akun & Kelompok Tani
+    Route::get('/pengaturan', [\App\Http\Controllers\Pengurus\PengaturanController::class, 'index'])->name('pengaturan');
+    Route::put('/pengaturan/profil', [\App\Http\Controllers\Pengurus\PengaturanController::class, 'updateProfil'])->name('pengaturan.profil');
+    Route::put('/pengaturan/password', [\App\Http\Controllers\Pengurus\PengaturanController::class, 'updatePassword'])->name('pengaturan.password');
+    Route::put('/pengaturan/kelompok', [\App\Http\Controllers\Pengurus\PengaturanController::class, 'updateKelompok'])->name('pengaturan.kelompok');
 });
 
 /* ============================================================

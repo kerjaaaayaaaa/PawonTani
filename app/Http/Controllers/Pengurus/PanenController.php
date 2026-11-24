@@ -33,9 +33,10 @@ class PanenController extends Controller
         $baseQuery = Panen::where('id_kelompok', $pengurus->id_kelompok);
 
         // Summary metrics
+        $like = DB::getDriverName() === 'pgsql' ? 'ILIKE' : 'LIKE';
         $metricsBase = clone $baseQuery;
-        $totalTonPadi = (float) (clone $metricsBase)->where('komoditas_nama', 'ILIKE', '%padi%')->sum('berat_kg') / 1000.0;
-        $totalTonJagung = (float) (clone $metricsBase)->where('komoditas_nama', 'ILIKE', '%jagung%')->sum('berat_kg') / 1000.0;
+        $totalTonPadi = (float) (clone $metricsBase)->where('komoditas_nama', $like, '%padi%')->sum('berat_kg') / 1000.0;
+        $totalTonJagung = (float) (clone $metricsBase)->where('komoditas_nama', $like, '%jagung%')->sum('berat_kg') / 1000.0;
 
         $stats = [
             'total' => (clone $metricsBase)->count(),
@@ -60,14 +61,23 @@ class PanenController extends Controller
             $query->where('status', strtolower($status));
         }
 
+        $like = DB::getDriverName() === 'pgsql' ? 'ILIKE' : 'LIKE';
+
         // Filter komoditas
         if ($komoditas = $request->query('komoditas')) {
-            $query->where('komoditas_nama', 'ILIKE', "%{$komoditas}%");
+            $query->where('komoditas_nama', $like, "%{$komoditas}%");
+        }
+
+        // Filter tanggal
+        if ($tanggalDari = $request->query('tanggal_dari')) {
+            $query->whereDate('tanggal_panen', '>=', $tanggalDari);
+        }
+        if ($tanggalSampai = $request->query('tanggal_sampai')) {
+            $query->whereDate('tanggal_panen', '<=', $tanggalSampai);
         }
 
         // Pencarian teks
         if ($search = trim((string) $request->query('q'))) {
-            $like = DB::getDriverName() === 'pgsql' ? 'ILIKE' : 'LIKE';
             $query->where(function ($q) use ($search, $like) {
                 $q->where('kode_panen', $like, "%{$search}%")
                   ->orWhere('varietas', $like, "%{$search}%")
@@ -130,7 +140,13 @@ class PanenController extends Controller
 
         $request->validate([
             'status' => ['required', 'in:disetujui,ditolak,menunggu'],
-            'catatan_verifikasi' => ['nullable', 'string', 'max:500'],
+            'catatan_verifikasi' => [
+                $request->input('status') === 'ditolak' ? 'required' : 'nullable',
+                'string',
+                'max:500',
+            ],
+        ], [
+            'catatan_verifikasi.required' => 'Alasan penolakan wajib diisi ketika menolak laporan hasil panen.',
         ]);
 
         $panen = Panen::where('id_kelompok', $pengurus->id_kelompok)

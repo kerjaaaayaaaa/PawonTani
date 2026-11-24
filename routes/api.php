@@ -91,3 +91,19 @@ Route::prefix('v1')->group(function () {
         });
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Admin / Pengurus REST API Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'dashboard'])->name('api.admin.dashboard');
+    Route::get('/anggota', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'anggota'])->name('api.admin.anggota');
+    Route::get('/lahan', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'lahan'])->name('api.admin.lahan');
+    Route::get('/panen', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'panen'])->name('api.admin.panen');
+    Route::get('/panen/statistik', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'panenStatistik'])->name('api.admin.panen.statistik');
+    Route::get('/panen/{id}', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'panenDetail'])->name('api.admin.panen.detail');
+    Route::patch('/panen/{id}/status', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'panenUpdateStatus'])->name('api.admin.panen.update-status');
+    Route::get('/transaksi', [\App\Http\Controllers\Api\Admin\AdminApiController::class, 'transaksi'])->name('api.admin.transaksi');
+});

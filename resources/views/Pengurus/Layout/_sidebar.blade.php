@@ -28,51 +28,58 @@
         <nav class="space-y-1">
           <!-- Dashboard -->
           <a href="{{ route('pengurus.dashboard') }}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group {{ request()->routeIs('pengurus.dashboard') ? 'bg-[#EBF6E0] text-[#4D9830] font-semibold' : 'text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10]' }}">
-            <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.dashboard') ? 'text-[#4D9830]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group {{ request()->routeIs('pengurus.dashboard') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : 'text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10]' }}">
+            <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.dashboard') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
             <span>Dashboard</span>
           </a>
 
           <!-- Kelola Anggota -->
           <a href="{{ route('pengurus.anggota') }}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group {{ request()->routeIs('pengurus.anggota') ? 'bg-[#EBF6E0] text-[#4D9830] font-semibold' : 'text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10]' }}">
-            <i data-lucide="users" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.anggota') ? 'text-[#4D9830]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group {{ request()->routeIs('pengurus.anggota*') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : 'text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10]' }}">
+            <i data-lucide="users" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.anggota*') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
             <span>Kelola Anggota</span>
           </a>
 
           <!-- Kelola Lahan -->
           <a href="{{ route('pengurus.lahan') }}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.lahan*') ? 'bg-[#EBF6E0] text-[#4D9830] font-semibold' : '' }}">
-            <i data-lucide="map" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.lahan*') ? 'text-[#4D9830]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.lahan*') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : '' }}">
+            <i data-lucide="map" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.lahan*') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
             <span>Kelola Lahan</span>
           </a>
 
           <!-- Monitoring Pertanian -->
           <a href="{{ route('pengurus.monitoring') }}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.monitoring') ? 'bg-[#EBF6E0] text-[#4D9830] font-semibold' : '' }}">
-            <i data-lucide="leaf" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.monitoring') ? 'text-[#4D9830]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.monitoring*') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : '' }}">
+            <i data-lucide="leaf" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.monitoring*') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
             <span>Monitoring Pertanian</span>
           </a>
 
           <!-- Panen -->
           <a href="{{ route('pengurus.panen') }}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.panen') ? 'bg-[#EBF6E0] text-[#4D9830] font-semibold' : '' }}">
-            <i data-lucide="wheat" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.panen') ? 'text-[#4D9830]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.panen*') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : '' }}">
+            <i data-lucide="wheat" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.panen*') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
             <span>Panen</span>
           </a>
 
-          <!-- Penjualan -->
+          <!-- Transaksi / Penjualan -->
           <a href="{{ route('pengurus.penjualan') }}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.penjualan') ? 'bg-[#EBF6E0] text-[#4D9830] font-semibold' : '' }}">
-            <i data-lucide="bar-chart-3" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.penjualan') ? 'text-[#4D9830]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
-            <span>Penjualan</span>
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.penjualan*') || request()->routeIs('pengurus.transaksi*') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : '' }}">
+            <i data-lucide="receipt" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.penjualan*') || request()->routeIs('pengurus.transaksi*') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            <span>Transaksi</span>
           </a>
 
           <!-- Laporan -->
           <a href="{{ route('pengurus.laporan') }}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.laporan') ? 'bg-[#EBF6E0] text-[#4D9830] font-semibold' : '' }}">
-            <i data-lucide="file-text" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.laporan') ? 'text-[#4D9830]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.laporan*') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : '' }}">
+            <i data-lucide="file-text" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.laporan*') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
             <span>Laporan</span>
+          </a>
+
+          <!-- Pengaturan -->
+          <a href="{{ route('pengurus.pengaturan') }}"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A6030] hover:bg-[#F5F8F1] hover:text-[#1A2D10] transition-all group {{ request()->routeIs('pengurus.pengaturan*') ? 'bg-[#EAF5E5] text-[#398D32] font-semibold' : '' }}">
+            <i data-lucide="settings" class="w-4 h-4 shrink-0 transition-colors {{ request()->routeIs('pengurus.pengaturan*') ? 'text-[#398D32]' : 'text-[#4A6030] group-hover:text-[#1A2D10]' }}"></i>
+            <span>Pengaturan</span>
           </a>
         </nav>
       </div>

@@ -6,7 +6,7 @@
 <div class="space-y-6">
 
   <!-- ==================== 1. HERO WELCOME BANNER ==================== -->
-  <div class="p-6 sm:p-8 rounded-[22px] bg-gradient-to-r from-[#2B571B] via-[#4D9830] to-[#6EB844] text-white shadow-sm relative overflow-hidden">
+  <div class="p-6 sm:p-8 rounded-[22px] bg-gradient-to-r from-[#2B571B] via-[#398D32] to-[#6EB844] text-white shadow-sm relative overflow-hidden">
     <div class="absolute -right-8 -bottom-8 w-60 h-60 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
     <div class="absolute right-1/3 -top-12 w-40 h-40 rounded-full bg-emerald-300/10 blur-xl pointer-events-none"></div>
 
@@ -24,41 +24,41 @@
         </h1>
 
         <p class="text-xs sm:text-sm text-emerald-50 leading-relaxed font-medium">
-          @if ($lahanMenunggu > 0)
-            Perhatian: Terdapat <span class="font-bold underline text-white">{{ $lahanMenunggu }} petak lahan</span> anggota yang menunggu verifikasi lapangan.
+          @if ($totalLaporanMenunggu > 0)
+            Perhatian: Terdapat <span class="font-bold underline text-white">{{ $totalLaporanMenunggu }} laporan</span> (lahan &amp; panen) yang membutuhkan peninjauan dan verifikasi Anda.
           @else
-            Pantau perkembangan budidaya tanaman, administrasi anggota, dan aktivitas perawatan harian lahan anggota secara terpadu.
+            Pantau perkembangan budidaya tanaman, administrasi anggota, verifikasi panen, dan transaksi hasil tani secara terpadu.
           @endif
         </p>
       </div>
 
       <!-- Tombol Aksi Cepat -->
       <div class="flex flex-wrap items-center gap-2.5 self-start lg:self-center shrink-0">
-        <a href="{{ route('pengurus.anggota') }}"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#1A2D10] text-xs sm:text-sm font-bold shadow-xs hover:bg-[#F5F8F1] hover:shadow-md transition-all">
-          <i data-lucide="users" class="w-4 h-4 text-[#4D9830]"></i>
-          <span>Kelola Anggota</span>
-        </a>
-        <a href="{{ route('pengurus.monitoring') }}"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1A2D10]/40 hover:bg-[#1A2D10]/60 border border-white/25 text-white text-xs sm:text-sm font-bold backdrop-blur-xs transition-all">
-          <i data-lucide="activity" class="w-4 h-4 text-emerald-300"></i>
-          <span>Monitoring Lahan</span>
-          @if ($lahanMenunggu > 0)
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <a href="{{ route('pengurus.panen') }}"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#1A2D10] text-xs sm:text-sm font-bold shadow-xs hover:bg-[#F8FAFC] hover:shadow-md transition-all">
+          <i data-lucide="wheat" class="w-4 h-4 text-[#398D32]"></i>
+          <span>Kelola Panen</span>
+          @if($panenMenunggu > 0)
+            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
           @endif
+        </a>
+        <a href="{{ route('pengurus.penjualan') }}"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1A2D10]/40 hover:bg-[#1A2D10]/60 border border-white/25 text-white text-xs sm:text-sm font-bold backdrop-blur-xs transition-all">
+          <i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i>
+          <span>Transaksi</span>
         </a>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 2. GRID 4 KARTU KPI RINGKASAN ==================== -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <!-- ==================== 2. GRID 5 KARTU KPI RINGKASAN ==================== -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
 
     <!-- Total Anggota Petani -->
     <div class="p-5 rounded-[20px] bg-white border border-[#E4F0D6] shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between">
       <div class="flex items-center justify-between mb-3">
         <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Anggota Petani</span>
-        <div class="w-10 h-10 rounded-xl bg-[#EBF6E0] text-[#4D9830] flex items-center justify-center">
+        <div class="w-10 h-10 rounded-xl bg-[#EAF5E5] text-[#398D32] flex items-center justify-center">
           <i data-lucide="users" class="w-5 h-5"></i>
         </div>
       </div>
@@ -66,7 +66,7 @@
         <div class="text-2xl font-extrabold text-[#1A2D10] tracking-tight">{{ number_format($totalAnggota) }}</div>
         <div class="mt-1 flex items-center gap-1.5 text-xs text-[#4A6030]">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span class="font-semibold">Petani Terdaftar di Poktan</span>
+          <span class="font-semibold">Petani Terdaftar</span>
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
     <!-- Total Petak & Luas Lahan -->
     <div class="p-5 rounded-[20px] bg-white border border-[#E4F0D6] shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between">
       <div class="flex items-center justify-between mb-3">
-        <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Lahan Garapan</span>
+        <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Total Lahan</span>
         <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
           <i data-lucide="map-pin" class="w-5 h-5"></i>
         </div>
@@ -84,48 +84,89 @@
           {{ number_format($totalLuasLahan, 2) }} <span class="text-sm font-semibold text-slate-500">Ha</span>
         </div>
         <div class="mt-1 text-xs text-slate-500 font-medium">
-          Terbagi dalam {{ number_format($totalPetakLahan) }} petak lahan
+          {{ number_format($totalPetakLahan) }} petak lahan aktif
         </div>
       </div>
     </div>
 
-    <!-- Status Verifikasi Lahan -->
+    <!-- Total Hasil Panen -->
     <div class="p-5 rounded-[20px] bg-white border border-[#E4F0D6] shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between">
       <div class="flex items-center justify-between mb-3">
-        <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Verifikasi Lahan</span>
-        <div class="w-10 h-10 rounded-xl {{ $lahanMenunggu > 0 ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-600' }} flex items-center justify-center">
-          <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+        <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Hasil Panen Disetujui</span>
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          <i data-lucide="wheat" class="w-5 h-5"></i>
         </div>
       </div>
       <div>
         <div class="text-2xl font-extrabold text-[#1A2D10] tracking-tight">
-          {{ $lahanTerverifikasi }} <span class="text-sm font-semibold text-slate-400">/ {{ $totalPetakLahan }}</span>
+          {{ number_format($totalHasilPanenTon, 2, ',', '.') }} <span class="text-sm font-semibold text-slate-500">Ton</span>
         </div>
-        <div class="mt-1 text-xs {{ $lahanMenunggu > 0 ? 'text-amber-600 font-semibold' : 'text-[#4A6030]' }}">
-          {{ $lahanMenunggu > 0 ? $lahanMenunggu . ' petak butuh verifikasi' : 'Seluruh lahan terverifikasi' }}
+        <div class="mt-1 text-xs text-emerald-700 font-medium">
+          Setara {{ number_format($totalHasilPanenKg, 0, ',', '.') }} kg
         </div>
       </div>
     </div>
 
-    <!-- Aktivitas 30 Hari Terakhir -->
+    <!-- Total Transaksi Penjualan -->
     <div class="p-5 rounded-[20px] bg-white border border-[#E4F0D6] shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between">
       <div class="flex items-center justify-between mb-3">
-        <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Aktivitas Petani</span>
+        <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Total Transaksi</span>
         <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
-          <i data-lucide="sprout" class="w-5 h-5"></i>
+          <i data-lucide="receipt" class="w-5 h-5"></i>
         </div>
       </div>
       <div>
-        <div class="text-2xl font-extrabold text-[#1A2D10] tracking-tight">{{ number_format($totalAktivitasBulanIni) }}</div>
-        <div class="mt-1 text-xs text-slate-500 font-medium">
-          Log perawatan dalam 30 hari
+        <div class="text-xl font-extrabold text-[#1A2D10] tracking-tight">
+          Rp {{ number_format($totalOmzet, 0, ',', '.') }}
+        </div>
+        <div class="mt-1 text-xs text-[#4A6030] font-medium">
+          {{ $totalTransaksi }} transaksi tercatat
+        </div>
+      </div>
+    </div>
+
+    <!-- Laporan Menunggu Verifikasi -->
+    <div class="p-5 rounded-[20px] bg-white border border-[#E4F0D6] shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-[11px] font-bold text-[#9AB880] uppercase tracking-wider">Menunggu Verifikasi</span>
+        <div class="w-10 h-10 rounded-xl {{ $totalLaporanMenunggu > 0 ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-600' }} flex items-center justify-center">
+          <i data-lucide="alert-circle" class="w-5 h-5"></i>
+        </div>
+      </div>
+      <div>
+        <div class="text-2xl font-extrabold text-[#1A2D10] tracking-tight">{{ $totalLaporanMenunggu }}</div>
+        <div class="mt-1 text-xs {{ $totalLaporanMenunggu > 0 ? 'text-amber-700 font-semibold' : 'text-emerald-700' }}">
+          {{ $lahanMenunggu }} lahan, {{ $panenMenunggu }} panen
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- ==================== 3. DUA KOLOM UTAMA ==================== -->
+  <!-- ==================== 3. SECTION GRAFIK PRODUKSI PANEN ==================== -->
+  <div class="p-6 rounded-[22px] bg-white border border-[#E4F0D6] shadow-2xs space-y-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E4F0D6]">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-[#EAF5E5] text-[#398D32] flex items-center justify-center shrink-0">
+          <i data-lucide="trending-up" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h2 class="text-base font-extrabold text-[#1A2D10]">Grafik Produksi Panen</h2>
+          <p class="text-xs text-slate-500 font-medium">Volume panen disetujui (Ton) dalam 6 bulan terakhir</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-semibold text-[#4A6030]">
+        <span class="inline-block w-3 h-3 rounded-full bg-[#398D32]"></span>
+        <span>Produksi Panen (Ton)</span>
+      </div>
+    </div>
+
+    <div class="relative w-full h-64 sm:h-72">
+      <canvas id="chartProduksiPanen"></canvas>
+    </div>
+  </div>
+
+  <!-- ==================== 4. DUA KOLOM UTAMA ==================== -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
     <!-- ========== KOLOM KIRI: FOKUS OPERASIONAL POKTAN (7 Kolom) ========== -->
@@ -144,7 +185,7 @@
             </div>
           </div>
           <a href="{{ route('pengurus.lahan') }}"
-            class="text-xs font-bold text-[#4D9830] hover:text-[#3D8024] hover:underline flex items-center gap-1">
+            class="text-xs font-bold text-[#398D32] hover:text-[#2d7027] hover:underline flex items-center gap-1">
             <span>Daftar Lahan</span>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
           </a>
@@ -154,12 +195,12 @@
           @forelse ($lahanMenungguTinjauan as $itemLahan)
             @php
               $statusBadge = match($itemLahan->status_verifikasi) {
-                'terverifikasi' => ['bg' => 'bg-[#EBF6E0]', 'text' => 'text-[#2E5A1C]', 'border' => 'border-[#D1DFC4]', 'label' => 'Terverifikasi'],
+                'terverifikasi' => ['bg' => 'bg-[#EAF5E5]', 'text' => 'text-[#2E5A1C]', 'border' => 'border-[#D1DFC4]', 'label' => 'Terverifikasi'],
                 'perlu_perbaikan' => ['bg' => 'bg-rose-50', 'text' => 'text-rose-700', 'border' => 'border-rose-200', 'label' => 'Perlu Perbaikan'],
                 default => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800', 'border' => 'border-amber-200', 'label' => 'Menunggu Verifikasi'],
               };
             @endphp
-            <div class="p-4 rounded-xl border border-[#E4F0D6] bg-[#FBFDF9] hover:bg-[#F5F8F1] transition-colors mb-3 last:mb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="p-4 rounded-xl border border-[#E4F0D6] bg-[#F8FAFC] hover:bg-[#EAF5E5]/40 transition-colors mb-3 last:mb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div class="space-y-1">
                 <div class="flex items-center gap-2">
                   <span class="text-sm font-bold text-[#1A2D10]">{{ $itemLahan->nama_lahan }}</span>
@@ -169,7 +210,7 @@
                 </div>
                 <div class="text-xs text-slate-600 flex items-center gap-2 flex-wrap">
                   <span class="flex items-center gap-1 font-medium text-[#1A2D10]">
-                    <i data-lucide="user" class="w-3.5 h-3.5 text-[#4D9830]"></i>
+                    <i data-lucide="user" class="w-3.5 h-3.5 text-[#398D32]"></i>
                     <span>{{ $itemLahan->pengguna->nama ?? 'Petani' }}</span>
                   </span>
                   <span class="text-slate-300">•</span>
@@ -181,7 +222,7 @@
 
               <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
                 <a href="{{ route('pengurus.lahan.show', $itemLahan->id_lahan) }}"
-                  class="h-8 px-3 rounded-lg bg-[#4D9830] hover:bg-[#3D8024] text-white text-xs font-bold flex items-center gap-1 transition-colors shadow-2xs">
+                  class="h-8 px-3 rounded-lg bg-[#398D32] hover:bg-[#2d7027] text-white text-xs font-bold flex items-center gap-1 transition-colors shadow-2xs">
                   <span>Tinjau Lahan</span>
                   <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                 </a>
@@ -189,7 +230,7 @@
             </div>
           @empty
             <div class="py-8 text-center">
-              <div class="w-12 h-12 rounded-2xl bg-[#EBF6E0] text-[#4D9830] flex items-center justify-center mx-auto mb-2.5">
+              <div class="w-12 h-12 rounded-2xl bg-[#EAF5E5] text-[#398D32] flex items-center justify-center mx-auto mb-2.5">
                 <i data-lucide="check-circle-2" class="w-6 h-6"></i>
               </div>
               <h3 class="text-sm font-bold text-[#1A2D10]">Semua Lahan Terverifikasi</h3>
@@ -205,16 +246,16 @@
       <div class="bg-white rounded-[22px] border border-[#E4F0D6] shadow-2xs overflow-hidden">
         <div class="p-5 sm:p-6 border-b border-[#E4F0D6]/70 flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-[#EBF6E0] flex items-center justify-center text-[#4D9830] shrink-0">
+            <div class="w-8 h-8 rounded-xl bg-[#EAF5E5] flex items-center justify-center text-[#398D32] shrink-0">
               <i data-lucide="clock" class="w-4 h-4"></i>
             </div>
             <div>
               <h2 class="text-base font-extrabold text-[#1A2D10]">Aktivitas Perawatan Petak Terkini</h2>
-              <p class="text-xs text-slate-500 font-medium">Laporan kegiatan harian petani lewat aplikasi mobile</p>
+              <p class="text-xs text-slate-500 font-medium">Laporan kegiatan harian petani dari aplikasi mobile</p>
             </div>
           </div>
           <a href="{{ route('pengurus.monitoring') }}"
-            class="text-xs font-bold text-[#4D9830] hover:text-[#3D8024] hover:underline flex items-center gap-1">
+            class="text-xs font-bold text-[#398D32] hover:text-[#2d7027] hover:underline flex items-center gap-1">
             <span>Selengkapnya</span>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
           </a>
@@ -224,15 +265,15 @@
           @forelse ($aktivitasTerkini as $akt)
             @php
               $kondisiBadge = match(strtolower($akt->kondisi_tanaman ?? '')) {
-                'sehat', 'sangat baik', 'baik' => ['bg' => 'bg-[#EBF6E0]', 'text' => 'text-[#2E5A1C]', 'border' => 'border-[#D1DFC4]', 'label' => $akt->kondisi_tanaman],
+                'sehat', 'sangat baik', 'baik' => ['bg' => 'bg-[#EAF5E5]', 'text' => 'text-[#2E5A1C]', 'border' => 'border-[#D1DFC4]', 'label' => $akt->kondisi_tanaman],
                 'terserang hama', 'kurang sehat', 'kering' => ['bg' => 'bg-rose-50', 'text' => 'text-rose-700', 'border' => 'border-rose-200', 'label' => $akt->kondisi_tanaman],
                 default => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800', 'border' => 'border-amber-200', 'label' => $akt->kondisi_tanaman ?? 'Normal'],
               };
             @endphp
-            <div class="p-4 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#F5F8F1]/50 transition-colors">
+            <div class="p-4 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#F8FAFC] transition-colors">
               <div class="space-y-1">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="text-xs font-bold text-[#4D9830] uppercase tracking-wider">
+                  <span class="text-xs font-bold text-[#398D32] uppercase tracking-wider">
                     {{ $akt->kategori ?? 'Perawatan' }}
                   </span>
                   <span class="text-slate-300">•</span>
@@ -265,7 +306,7 @@
             </div>
           @empty
             <div class="py-8 text-center">
-              <div class="w-12 h-12 rounded-2xl bg-[#EBF6E0] text-[#4D9830] flex items-center justify-center mx-auto mb-2.5">
+              <div class="w-12 h-12 rounded-2xl bg-[#EAF5E5] text-[#398D32] flex items-center justify-center mx-auto mb-2.5">
                 <i data-lucide="inbox" class="w-6 h-6"></i>
               </div>
               <h3 class="text-sm font-bold text-[#1A2D10]">Belum Ada Aktivitas</h3>
@@ -286,7 +327,7 @@
       <div class="bg-white rounded-[22px] border border-[#E4F0D6] shadow-2xs overflow-hidden">
         <div class="p-5 sm:p-6 border-b border-[#E4F0D6]/70 flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-[#EBF6E0] flex items-center justify-center text-[#4D9830] shrink-0">
+            <div class="w-8 h-8 rounded-xl bg-[#EAF5E5] flex items-center justify-center text-[#398D32] shrink-0">
               <i data-lucide="building-2" class="w-4 h-4"></i>
             </div>
             <div>
@@ -294,17 +335,17 @@
               <p class="text-xs text-slate-500 font-medium">Informasi kelembagaan dan domisili</p>
             </div>
           </div>
-          <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#EBF6E0] text-[#2E5A1C] border border-[#D1DFC4]">
+          <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#EAF5E5] text-[#2E5A1C] border border-[#D1DFC4]">
             {{ $kelompok?->status ?? 'Aktif' }}
           </span>
         </div>
 
         <div class="p-5 sm:p-6 space-y-3.5">
-          <div class="p-4 rounded-xl bg-[#F5F8F1] border border-[#E4F0D6] space-y-2">
+          <div class="p-4 rounded-xl bg-[#F8FAFC] border border-[#E4F0D6] space-y-2">
             <span class="text-[10px] font-bold uppercase tracking-wider text-[#9AB880] block">Nama Poktan</span>
-            <div class="text-base font-extrabold text-[#1A2D10]">{{ $kelompok?->nama_kelompok ?? 'Kelompok Tani Belum Ditentukan' }}</div>
+            <div class="text-base font-extrabold text-[#1A2D10]">{{ $kelompok?->nama_kelompok ?? 'Kelompok Tani' }}</div>
             <div class="text-xs text-slate-600 flex items-center gap-1.5">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#4D9830]"></i>
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#398D32]"></i>
               <span>{{ $kelompok?->alamat ?? ($pengurus->alamat ?? 'Wilayah Kerja Pertanian') }}</span>
             </div>
           </div>
@@ -316,7 +357,7 @@
             </div>
             <div class="p-3 rounded-xl bg-white border border-[#E4F0D6]">
               <span class="text-[10px] font-bold uppercase tracking-wider text-[#9AB880] block">Jabatan Anda</span>
-              <span class="font-bold text-[#4D9830] mt-0.5 block">{{ $pengurus->jabatan ?? 'Pengurus Poktan' }}</span>
+              <span class="font-bold text-[#398D32] mt-0.5 block">{{ $pengurus->jabatan ?? 'Pengurus Poktan' }}</span>
             </div>
           </div>
 
@@ -331,11 +372,11 @@
       <div class="bg-white rounded-[22px] border border-[#E4F0D6] shadow-2xs overflow-hidden">
         <div class="p-5 sm:p-6 border-b border-[#E4F0D6]/70 flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-[#EBF6E0] flex items-center justify-center text-[#4D9830] shrink-0">
+            <div class="w-8 h-8 rounded-xl bg-[#EAF5E5] flex items-center justify-center text-[#398D32] shrink-0">
               <i data-lucide="wheat" class="w-4 h-4"></i>
             </div>
             <div>
-              <h2 class="text-base font-extrabold text-[#1A2D10]">Komoditas Budidaya</h2>
+              <h2 class="text-base font-extrabold text-[#1A2D10]">Statistik Komoditas</h2>
               <p class="text-xs text-slate-500 font-medium">Sebaran luasan tanaman anggota</p>
             </div>
           </div>
@@ -351,15 +392,15 @@
             <div class="space-y-1.5">
               <div class="flex items-center justify-between text-xs">
                 <span class="font-bold text-[#1A2D10] flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-[#4D9830]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#398D32]"></span>
                   <span>{{ $itemKmdt->nama_komoditas }}</span>
                 </span>
                 <span class="text-slate-600 font-semibold">
                   {{ number_format($luasKmdt, 2) }} Ha <span class="text-slate-400 font-normal">({{ $persenKmdt }}%)</span>
                 </span>
               </div>
-              <div class="h-2.5 w-full bg-[#EBF6E0] rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-[#4D9830] to-[#72BE4A] rounded-full transition-all duration-500" style="width: {{ max($persenKmdt, 4) }}%"></div>
+              <div class="h-2.5 w-full bg-[#EAF5E5] rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-[#398D32] to-[#6EB844] rounded-full transition-all duration-500" style="width: {{ max($persenKmdt, 4) }}%"></div>
               </div>
             </div>
           @empty
@@ -376,3 +417,60 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const chartData = @json($grafikProduksiPanen);
+  const ctx = document.getElementById('chartProduksiPanen');
+  if (ctx && chartData.labels && chartData.labels.length > 0) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chartData.labels,
+        datasets: [{
+          label: 'Produksi Panen (Ton)',
+          data: chartData.data,
+          backgroundColor: '#398D32',
+          hoverBackgroundColor: '#2d7027',
+          borderRadius: 8,
+          barThickness: 28,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1A2D10',
+            titleFont: { family: 'Inter', size: 12, weight: 'bold' },
+            bodyFont: { family: 'Inter', size: 12 },
+            callbacks: {
+              label: function(ctx) {
+                return ' ' + ctx.parsed.y + ' Ton';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(228, 240, 214, 0.4)' },
+            ticks: { color: '#4A6030', font: { family: 'Inter', size: 11 } }
+          },
+          y: {
+            grid: { color: 'rgba(228, 240, 214, 0.6)' },
+            ticks: {
+              color: '#4A6030',
+              font: { family: 'Inter', size: 11 },
+              callback: function(v) { return v + ' Ton'; }
+            }
+          }
+        }
+      }
+    });
+  }
+});
+</script>
+@endpush

@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\AktivitasTanam;
 use App\Models\Komoditas;
 use App\Models\Lahan;
+use App\Models\Panen;
 use App\Models\Pengguna;
+use App\Models\TransaksiPenjualan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -21,7 +24,7 @@ class DashboardController extends Controller
         $idKelompok = $pengurus?->id_kelompok;
         $kelompok = $pengurus?->kelompokTani;
 
-        // 1. STATISTIK KPI UTAMA (4 Kartu Ringkasan)
+        // 1. STATISTIK KPI UTAMA
         $totalAnggota = 0;
         $totalPetakLahan = 0;
         $totalLuasLahan = 0.0;
@@ -29,10 +32,17 @@ class DashboardController extends Controller
         $lahanMenunggu = 0;
         $lahanPerbaikan = 0;
         $totalAktivitasBulanIni = 0;
+        $totalHasilPanenKg = 0.0;
+        $totalHasilPanenTon = 0.0;
+        $panenMenunggu = 0;
+        $totalTransaksi = 0;
+        $totalOmzet = 0.0;
+        $totalLaporanMenunggu = 0;
 
         $lahanMenungguTinjauan = collect();
         $aktivitasTerkini = collect();
         $sebaranKomoditas = collect();
+        $grafikProduksiPanen = ['labels' => [], 'data' => []];
 
         if ($idKelompok) {
             // Total Anggota
@@ -40,7 +50,7 @@ class DashboardController extends Controller
                 ->where('id_kelompok', $idKelompok)
                 ->count();
 
-            // Total Petak & Luas Lahan (berdasarkan id_kelompok pada lahan atau pemilik di kelompok)
+            // Total Petak & Luas Lahan
             $lahanQuery = Lahan::where(function ($q) use ($idKelompok) {
                 $q->where('id_kelompok', $idKelompok)
                   ->orWhereHas('pengguna', fn ($uq) => $uq->where('id_kelompok', $idKelompok));
@@ -54,6 +64,20 @@ class DashboardController extends Controller
             $lahanMenunggu = (clone $lahanQuery)->whereIn('status_verifikasi', ['menunggu', 'menunggu_verifikasi'])->count();
             $lahanPerbaikan = (clone $lahanQuery)->where('status_verifikasi', 'perlu_perbaikan')->count();
 
+            // Total Hasil Panen & Panen Menunggu
+            $panenBase = Panen::where('id_kelompok', $idKelompok);
+            $totalHasilPanenKg = (float) (clone $panenBase)->where('status', 'disetujui')->sum('berat_kg');
+            $totalHasilPanenTon = round($totalHasilPanenKg / 1000.0, 2);
+            $panenMenunggu = (clone $panenBase)->where('status', 'menunggu')->count();
+
+            // Total Transaksi & Omzet
+            $trxBase = TransaksiPenjualan::whereHas('penjual', fn ($q) => $q->where('id_kelompok', $idKelompok));
+            $totalTransaksi = (clone $trxBase)->count();
+            $totalOmzet = (float) (clone $trxBase)->where('status_pembayaran', '!=', 'dibatalkan')->sum('total_harga');
+
+            // Total Laporan Menunggu (Lahan + Panen)
+            $totalLaporanMenunggu = $lahanMenunggu + $panenMenunggu;
+
             // Aktivitas 30 Hari Terakhir
             $totalAktivitasBulanIni = AktivitasTanam::where(function ($q) use ($idKelompok) {
                     $q->where('id_kelompok', $idKelompok)
@@ -62,7 +86,7 @@ class DashboardController extends Controller
                 ->where('tanggal', '>=', Carbon::now()->subDays(30))
                 ->count();
 
-            // 2. DAFTAR LAHAN MENUNGGU VERIFIKASI / TINJAUAN (4-5 Terbaru)
+            // 2. DAFTAR LAHAN MENUNGGU VERIFIKASI / TINJAUAN (5 Terbaru)
             $lahanMenungguTinjauan = (clone $lahanQuery)
                 ->with(['pengguna', 'komoditas'])
                 ->whereIn('status_verifikasi', ['menunggu', 'menunggu_verifikasi', 'perlu_perbaikan'])
@@ -103,6 +127,26 @@ class DashboardController extends Controller
                 ->orderByDesc('lahan_sum_luas')
                 ->take(5)
                 ->get();
+
+            // 5. GRAFIK PRODUKSI PANEN 6 BULAN TERAKHIR
+            $months = [];
+            $dataPanen = [];
+            for ($i = 5; $i >= 0; $i--) {
+                $d = Carbon::now()->subMonths($i);
+                $mStart = $d->copy()->startOfMonth()->toDateString();
+                $mEnd = $d->copy()->endOfMonth()->toDateString();
+                $months[] = $d->locale('id')->isoFormat('MMM Y');
+
+                $ton = (float) Panen::where('id_kelompok', $idKelompok)
+                    ->where('status', 'disetujui')
+                    ->whereBetween('tanggal_panen', [$mStart, $mEnd])
+                    ->sum('berat_kg') / 1000.0;
+                $dataPanen[] = round($ton, 2);
+            }
+            $grafikProduksiPanen = [
+                'labels' => $months,
+                'data' => $dataPanen,
+            ];
         }
 
         // Sapaan Waktu Indonesia
@@ -127,10 +171,17 @@ class DashboardController extends Controller
             'lahanTerverifikasi',
             'lahanMenunggu',
             'lahanPerbaikan',
+            'totalHasilPanenKg',
+            'totalHasilPanenTon',
+            'panenMenunggu',
+            'totalTransaksi',
+            'totalOmzet',
+            'totalLaporanMenunggu',
             'totalAktivitasBulanIni',
             'lahanMenungguTinjauan',
             'aktivitasTerkini',
-            'sebaranKomoditas'
+            'sebaranKomoditas',
+            'grafikProduksiPanen'
         ));
     }
 }

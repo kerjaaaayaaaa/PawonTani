@@ -12,7 +12,7 @@
 
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 text-xs sm:text-sm">
-      <a href="{{ route('pengurus.dashboard') }}" class="font-medium text-[#4A6030] hover:text-[#4D9830] transition-colors">
+      <a href="{{ route('pengurus.dashboard') }}" class="font-medium text-[#4A6030] hover:text-[#398D32] transition-colors">
         PawonTani
       </a>
       <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#9AB880]"></i>
@@ -26,7 +26,7 @@
   <div class="flex items-center gap-3">
 
     <!-- Kelompok Badge -->
-    <span class="hidden rounded-full border border-[#B8D99B] bg-[#EBF6E0] px-3 py-1.5 text-[10px] font-semibold text-[#4D9830] sm:block">
+    <span class="hidden rounded-full border border-[#B8D99B] bg-[#EAF5E5] px-3 py-1.5 text-[10px] font-semibold text-[#398D32] sm:block">
       <i data-lucide="sprout" class="mr-1 inline h-3 w-3"></i>{{ auth()->user()->kelompokTani->nama_kelompok ?? 'Kelompok Tani' }}
     </span>
 
@@ -44,11 +44,11 @@
             <span class="block text-sm font-bold text-[#1A2D10]">Notifikasi</span>
             <span class="mt-0.5 block text-[10px] text-[#9AB880]">Pembaruan terbaru untuk Anda</span>
           </div>
-          <span class="rounded-full bg-[#EBF6E0] px-2 py-0.5 text-[10px] font-bold text-[#4D9830]">3 baru</span>
+          <span class="rounded-full bg-[#EAF5E5] px-2 py-0.5 text-[10px] font-bold text-[#398D32]">3 baru</span>
         </div>
         <div class="max-h-[360px] divide-y divide-[#E4F0D6]/70 overflow-y-auto">
           <a href="{{ route('pengurus.anggota') }}" data-pengurus-title="Kelola Anggota" class="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-[#F5F8F1]">
-            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EBF6E0] text-[#4D9830]"><i data-lucide="user-plus" class="h-4 w-4"></i></span>
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EAF5E5] text-[#398D32]"><i data-lucide="user-plus" class="h-4 w-4"></i></span>
             <span class="min-w-0 flex-1"><span class="block text-xs font-bold text-[#1A2D10]">Anggota baru bergabung</span><span class="mt-0.5 block text-[11px] leading-relaxed text-[#6B7F5B]">Satu data anggota baru masuk.</span><span class="mt-1 block text-[10px] text-[#9AB880]">1 jam lalu</span></span>
             <i data-lucide="chevron-right" class="mt-2 h-3.5 w-3.5 shrink-0 text-[#9AB880]"></i>
           </a>
@@ -63,7 +63,7 @@
             <i data-lucide="chevron-right" class="mt-2 h-3.5 w-3.5 shrink-0 text-[#9AB880]"></i>
           </a>
         </div>
-        <a href="{{ route('pengurus.dashboard') }}" data-pengurus-title="Dashboard" class="block border-t border-[#E4F0D6] px-4 py-3 text-center text-xs font-bold text-[#4D9830] hover:bg-[#F5F8F1]">Lihat selengkapnya</a>
+        <a href="{{ route('pengurus.dashboard') }}" data-pengurus-title="Dashboard" class="block border-t border-[#E4F0D6] px-4 py-3 text-center text-xs font-bold text-[#398D32] hover:bg-[#F5F8F1]">Lihat selengkapnya</a>
       </div>
     </div>
 
@@ -73,7 +73,7 @@
         @if(auth()->user() && auth()->user()->foto_profil)
           <img src="{{ asset(auth()->user()->foto_profil) }}" alt="{{ auth()->user()->nama }}" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shadow-2xs shrink-0">
         @else
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-[#4D9830] to-[#72BE4A] text-white flex items-center justify-center font-bold text-xs shadow-2xs shrink-0">
+          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-[#398D32] to-[#72BE4A] text-white flex items-center justify-center font-bold text-xs shadow-2xs shrink-0">
             {{ strtoupper(substr(auth()->user()->nama ?? 'S', 0, 1)) }}
           </div>
         @endif
